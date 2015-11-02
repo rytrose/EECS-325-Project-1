@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -12,13 +13,14 @@ public class Proxyd {
 	private static int portNumber = -1;
 	private static ServerSocket serverSocket = null;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		// Establish the server port number given in the command line arguments
 		try{
 			portNumber = Integer.parseInt(args[1]);
 		}
 		catch(Exception e){
+			System.out.println("FAILURE TO PARSE COMMAND LINE ARGUMENTS");
 			System.out.println(e.toString());
 		}
 		
@@ -35,14 +37,15 @@ public class Proxyd {
 		while(true){
 			Socket clientSocket = null;
 			try{
+				System.out.println("LISTENING FOR CLIENT REQUEST");
 				clientSocket = serverSocket.accept();
+				System.out.println("ACCEPTED CLIENT REQUEST");
 			}
 			catch(Exception e){
+				System.out.println("DID NOT ACCEPT CONNECTION FROM SERVER SOCKET");
 				System.out.println(e.getMessage());
 			}
-			
 			new ClientToServerThread(clientSocket).start();
-			new ServerToClientThread(clientSocket).start();
 		}
 	}
 
