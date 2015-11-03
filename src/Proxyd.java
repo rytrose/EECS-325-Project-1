@@ -8,7 +8,7 @@ import java.net.Socket;
  * @author Ryan Rose
  *
  */
-public class Proxyd {
+public class proxyd {
 	
 	private static int portNumber = -1;
 	private static ServerSocket serverSocket = null;
@@ -17,7 +17,7 @@ public class Proxyd {
 		
 		// Establish the server port number given in the command line arguments
 		try{
-			portNumber = Integer.parseInt(args[1]);
+			portNumber = Integer.parseInt(args[2]);
 		}
 		catch(Exception e){
 			e.getStackTrace();
@@ -39,7 +39,6 @@ public class Proxyd {
 				clientSocket = serverSocket.accept();
 			}
 			catch(Exception e){
-				System.out.println("DID NOT ACCEPT CONNECTION FROM SERVER SOCKET");
 				e.getStackTrace();
 			}
 			new ProxyThread(clientSocket).start();
