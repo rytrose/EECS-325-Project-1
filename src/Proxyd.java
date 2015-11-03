@@ -20,8 +20,7 @@ public class Proxyd {
 			portNumber = Integer.parseInt(args[1]);
 		}
 		catch(Exception e){
-			System.out.println("FAILURE TO PARSE COMMAND LINE ARGUMENTS");
-			System.out.println(e.toString());
+			e.getStackTrace();
 		}
 		
 		// Create a server socket on the specified port
@@ -37,15 +36,13 @@ public class Proxyd {
 		while(true){
 			Socket clientSocket = null;
 			try{
-				System.out.println("LISTENING FOR CLIENT REQUEST");
 				clientSocket = serverSocket.accept();
-				System.out.println("ACCEPTED CLIENT REQUEST");
 			}
 			catch(Exception e){
 				System.out.println("DID NOT ACCEPT CONNECTION FROM SERVER SOCKET");
-				System.out.println(e.getMessage());
+				e.getStackTrace();
 			}
-			new ClientToServerThread(clientSocket).start();
+			new ProxyThread(clientSocket).start();
 		}
 	}
 

@@ -47,7 +47,9 @@ public class ClientToServerThread extends Thread {
 			serverSocket = new Socket(destinationAddress, 80);
 			
 			// Create a ServerToClientThread for listening to the server
-			new ServerToClientThread(clientSocket, serverSocket).start();
+			if(clientSocket != null && serverSocket != null){
+				new ServerToClientThread(clientSocket, serverSocket).start();
+			}
 			
 			//*****SEND REQUEST TO SERVER*****
 			// Write to the server socket
@@ -96,7 +98,7 @@ public class ClientToServerThread extends Thread {
 			System.out.println("FAILURE IN SENDING REQUEST");
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			
+						
 		}
 	}
 	
@@ -110,6 +112,8 @@ public class ClientToServerThread extends Thread {
 			url = new URL(urlString);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
+			System.out.println("URL String: " + urlString);
+			
 		}
 		return url;
 	}
